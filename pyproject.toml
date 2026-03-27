@@ -1,0 +1,15 @@
+[project]
+name = "PyNeoHtop"
+version = "0.1.0b1"
+description = "A modern cross-platform system monitor built with Python, pywebview, and psutil<"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "psutil",
+    "pywebview[pyside6]",
+    "zstandard>=0.25.0",
+    "py-cpuinfo>=9.0.0"
+]
+
+[project.optional-dependencies]
+build = ["nuitka", "ordered-set", "zstandard"]

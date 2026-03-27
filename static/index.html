@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>PyNeoHtop</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+    </head>
+    <body>
+        <div class="dashboard">
+            <div class="card" style="grid-column: span 2">
+                <div class="card-header">
+                    <img src="images/emoji_u1f4bb.png" class="emoji-icon" />
+                    <span class="card-title">CPU</span>
+                </div>
+
+                <div class="stat-row">
+                    <span class="stat-label">Model</span>
+                    <span
+                        class="stat-value"
+                        id="cpu-name"
+                        style="font-size: 12px"
+                        >-</span
+                    >
+                </div>
+
+                <div class="stat-row">
+                    <span class="stat-label">Total Usage</span>
+                    <span class="stat-value big-value" id="cpu-total-val"
+                        >0.0%</span
+                    >
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bg">
+                        <div
+                            class="progress-fill"
+                            id="cpu-total-bar"
+                            style="width: 0%; background: var(--primary-color)"
+                        ></div>
+                    </div>
+                </div>
+
+                <div class="stat-row" style="margin-top: 20px">
+                    <span class="stat-label">core utilization</span>
+                </div>
+                <div class="cpu-grid" id="cpu-cores-container"></div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <img src="images/emoji_u1f9e0.png" class="emoji-icon" />
+                    <span class="card-title">Memory</span>
+                </div>
+
+                <div class="stat-row">
+                    <span class="stat-label">Uesage </span>
+                    <span class="stat-value" id="mem-percent">0%</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bg">
+                        <div
+                            class="progress-fill"
+                            id="mem-bar"
+                            style="width: 0%; background: var(--success-color)"
+                        ></div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 15px">
+                    <div class="stat-row">
+                        <span class="stat-label">Used /Total</span>
+                        <span class="stat-value"
+                            ><span id="mem-used">0</span> /
+                            <span id="mem-total">0</span></span
+                        >
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Freeze</span>
+                        <span class="stat-value" id="mem-free">0 GB</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Cache</span>
+                        <span class="stat-value" id="mem-cached">0 GB</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <img src="./images/emoji_u1f4be.png" class="emoji-icon" />
+                    <span class="card-title">Disk (/)</span>
+                </div>
+
+                <div class="stat-row">
+                    <span class="stat-label">Use</span>
+                    <span class="stat-value" id="disk-percent">0%</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bg">
+                        <div
+                            class="progress-fill"
+                            id="disk-bar"
+                            style="width: 0%; background: var(--warning-color)"
+                        ></div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 15px">
+                    <div class="stat-row">
+                        <span class="stat-label">Used / Total</span>
+                        <span class="stat-value"
+                            ><span id="disk-used">0</span> /
+                            <span id="disk-total">0</span>
+                        </span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Freeze</span>
+                        <span class="stat-value" id="disk-free">0 GB</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <img src="images/emoji_u1f310.png" class="emoji-icon" />
+                    <span class="card-title">Network I/O</span>
+                </div>
+
+                <div
+                    class="network-total"
+                    style="
+                        background: #f5f5f5;
+                        border-radius: 8px;
+                        padding: 10px;
+                        margin-bottom: 10px;
+                    "
+                >
+                    <div class="stat-row">
+                        <span class="stat-label" style="font-weight: 600"
+                            >Total download</span
+                        >
+                        <span
+                            class="stat-value"
+                            id="net-total-download"
+                            style="color: var(--success-color)"
+                            >0 B/s</span
+                        >
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label" style="font-weight: 600"
+                            >Total upload</span
+                        >
+                        <span
+                            class="stat-value"
+                            id="net-total-upload"
+                            style="color: var(--primary-color)"
+                            >0 B/s</span
+                        >
+                    </div>
+                </div>
+
+                <div
+                    class="network-toggle"
+                    id="network-toggle"
+                    style="
+                        margin-top: 10px;
+                        margin-bottom: 5px;
+                        cursor: pointer;
+                        user-select: none;
+                    "
+                >
+                    <span class="stat-label" style="font-weight: 600"
+                        >Networklst</span
+                    >
+                    <span
+                        class="toggle-icon"
+                        id="toggle-icon"
+                        style="
+                            margin-left: 8px;
+                            transition: transform 0.3s ease;
+                            display: inline-block;
+                        "
+                        >▼</span
+                    >
+                </div>
+
+                <div
+                    id="network-list-container"
+                    style="
+                        max-height: 0;
+                        overflow: hidden;
+                        transition: max-height 0.3s ease;
+                    "
+                ></div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <img src="images/emoji_u2139.png" class="emoji-icon" />
+                    <span class="card-title">Sysinfo</span>
+                </div>
+
+                <div class="stat-row">
+                    <span class="stat-label">Runtime</span>
+                    <span class="stat-value" id="uptime" style="font-size: 13px"
+                        >0秒</span
+                    >
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">load avg (1/5/15m)</span>
+                    <span
+                        class="stat-value"
+                        id="load-avg"
+                        style="font-size: 13px"
+                        >0 | 0 | 0</span
+                    >
+                </div>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>

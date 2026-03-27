@@ -1,0 +1,159 @@
+:root {
+    --primary-color: #1890ff;
+    --success-color: #52c41a;
+    --warning-color: #faad14;
+    --danger-color: #ff4d4f;
+    --bg-color: #f0f2f5;
+    --card-bg: #ffffff;
+    --text-main: #333333;
+    --text-sub: #666666;
+}
+
+body {
+    font-family:
+        -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+        Arial, sans-serif;
+    background-color: var(--bg-color);
+    margin: 0;
+    padding: 20px;
+    color: var(--text-main);
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-sub);
+    margin-left: 10px;
+}
+/* 网卡项样式 */
+.network-item {
+    background: #fafafa;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 8px;
+}
+
+.network-item:last-child {
+    margin-bottom: 0;
+}
+
+.network-name {
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 5px;
+}
+
+/* 下载速度颜色 */
+.download-speed {
+    color: var(--success-color);
+}
+
+/* 上传速度颜色 */
+.upload-speed {
+    color: var(--primary-color);
+}
+/* Google Emoji 图片样式 */
+.emoji-icon {
+    width: 24px; /* 控制 Emoji 大小 */
+    height: 24px;
+    vertical-align: middle;
+    object-fit: contain;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.stat-label {
+    color: var(--text-sub);
+}
+.stat-value {
+    font-weight: 600;
+    font-family: "Consolas", "Monaco", monospace;
+}
+
+.progress-container {
+    margin-top: 5px;
+}
+.progress-bg {
+    width: 100%;
+    height: 8px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.5s ease-in-out;
+}
+
+.cpu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+.core-box {
+    background: #fafafa;
+    border-radius: 6px;
+    padding: 5px;
+    text-align: center;
+}
+.core-label {
+    font-size: 10px;
+    color: #999;
+}
+.core-val {
+    font-size: 12px;
+    font-weight: bold;
+    margin: 2px 0;
+}
+.core-bar {
+    height: 4px;
+    background: #e0e0e0;
+    border-radius: 2px;
+    overflow: hidden;
+}
+.core-bar-fill {
+    height: 100%;
+    transition: width 0.3s;
+}
+
+.big-value {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--primary-color);
+}
