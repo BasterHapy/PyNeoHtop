@@ -55,10 +55,12 @@ jobs:
           pip install -r requirement.txt
           pip install nuitka ordered-set zstandard
 
-      - name: Build with Nuitka (Linux/macOS)
-        if: runner.os != 'Windows'
+      # --- 修改点 1: Linux 构建 ---
+      - name: Build with Nuitka (Linux)
+        if: runner.os == 'Linux'
         run: |
           nuitka --standalone --onefile \
+            --assume-yes-for-downloads \
             --enable-plugin=pywebview \
             --enable-plugin=pyside6 \
             --include-data-dir=static=static \
@@ -67,17 +69,31 @@ jobs:
             --include-package=cpuinfo \
             main.py
 
+      # --- 修改点 2: Windows 构建 (添加 --assume-yes-for-downloads) ---
       - name: Build with Nuitka (Windows)
         if: runner.os == 'Windows'
         shell: cmd
         run: |
-          nuitka --standalone --onefile ^
+          nuitka --standalone --onefile --assume-yes-for-downloads ^
             --enable-plugin=pywebview ^
             --enable-plugin=pyside6 ^
             --include-data-dir=static=static ^
             --include-package=monitoring ^
             --include-package=psutil ^
             --include-package=cpuinfo ^
+            main.py
+
+      # --- 修改点 3: macOS 构建 (改为 --mode=app) ---
+      - name: Build with Nuitka (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          nuitka --mode=app --assume-yes-for-downloads \
+            --enable-plugin=pywebview \
+            --enable-plugin=pyside6 \
+            --include-data-dir=static=static \
+            --include-package=monitoring \
+            --include-package=psutil \
+            --include-package=cpuinfo \
             main.py
 
       - name: Prepare artifact (Linux)
@@ -97,14 +113,14 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           mkdir -p artifacts
-          # 如果生成的是.app目录，需要打包
+          # --mode=app 必然生成 main.app 目录
           if [ -d "main.app" ]; then
             cd main.app
             zip -r ../artifacts/PyNeoHtop-${{ matrix.platform }}.zip .
             cd ..
           else
-            mv main.bin artifacts/PyNeoHtop-${{ matrix.platform }}
-            chmod +x artifacts/PyNeoHtop-${{ matrix.platform }}
+            echo "Error: main.app not found!"
+            exit 1
           fi
 
       - name: Upload build artifact
